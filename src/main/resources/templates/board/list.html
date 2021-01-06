@@ -7,7 +7,28 @@
       </nav>
     <div class="container">
         <h2>게시판</h2>
-    </div>
+        <div>총 건수 : <span th:text="${#lists.size(boards)}"></span></div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">번호</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="board : ${boards}">
+              <th th:text="${board.id}">Mark</th>
+              <th><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}">Mark</a></th>
+              <th>홍길동</th>
+            </tr>
+            <tr>
+          </tbody>
+        </table>
+        <div class="text-end">
+          <a type="button" class="btn btn-primary" th:href="@{/board/form}">쓰기</a>
+        </div>
+      </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
