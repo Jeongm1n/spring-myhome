@@ -1,65 +1,77 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="fragments/common :: head('게시판')">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/common :: menu('board')">
-      </nav>
-    <div class="container">
-        <h2>게시판</h2>
-        <div>총 건수 : <span th:text="${boards.totalElements}"></span></div> <!--getTotalElements > totalElements-->
-        <form class="row g-3 d-flex justify-content-end" method="get" th:action="@{/board/list}"> <!--action url 뒤에 searchText-->
-          <div class="col-auto">
-            <label for="searchText" class="visually-hidden">검색</label>
-            <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}">
-          </div>
-          <div class="col-auto">
-            <button type="submit" class="btn btn-dark mb-3">검색</button>
-          </div>
-        </form>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">번호</th>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="board : ${boards}">
-              <th th:text="${board.id}">Mark</th>
-              <th><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}">Mark</a></th>
-              <th>홍길동</th>
-            </tr>
-            <tr>
-          </tbody>
-        </table>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${1 == boards.pageable.pageNumber + 1} ? 'disabled'">
-              <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber - 1}, searchText=${param.searchText})}" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <!--getPageable, getPageNumber -> pageable, pageNumber-->
-            <li class="page-item" th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}"><a class="page-link" href="#" th:href="@{/board/list(page=${i - 1}, searchText=${param.searchText})}" th:text="${i}">1</a></li>
-            <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber + 1} ? 'disabled'">
-              <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
-            </li>
-          </ul>
-        </nav>
-        <div class="text-end">
-          <a type="button" class="btn btn-primary" th:href="@{/board/form}">쓰기</a>
-        </div>
+
+<head th:replace="fragments/common :: head('게시판')">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/common :: menu('board')">
+  </nav>
+  <div class="container">
+    <h2>게시판</h2>
+    <div>총 건수 : <span th:text="${boards.totalElements}"></span></div>
+    <!--getTotalElements > totalElements-->
+    <form class="row g-3 d-flex justify-content-end" method="get" th:action="@{/board/list}">
+      <!--action url 뒤에 searchText-->
+      <div class="col-auto">
+        <label for="searchText" class="visually-hidden">검색</label>
+        <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}">
       </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-dark mb-3">검색</button>
+      </div>
+    </form>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">번호</th>
+          <th scope="col">제목</th>
+          <th scope="col">작성자</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="board : ${boards}">
+          <th th:text="${board.id}">Mark</th>
+          <th><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}">Mark</a></th>
+          <th>홍길동</th>
+        </tr>
+        <tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${1 == boards.pageable.pageNumber + 1} ? 'disabled'">
+          <a class="page-link" href="#"
+            th:href="@{/board/list(page=${boards.pageable.pageNumber - 1}, searchText=${param.searchText})}"
+            tabindex="-1" aria-disabled="true">Previous</a>
+        </li>
+        <!--getPageable, getPageNumber -> pageable, pageNumber-->
+        <li class="page-item" th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'"
+          th:each="i : ${#numbers.sequence(startPage, endPage)}"><a class="page-link" href="#"
+            th:href="@{/board/list(page=${i - 1}, searchText=${param.searchText})}" th:text="${i}">1</a></li>
+        <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber + 1} ? 'disabled'">
+          <a class="page-link" href="#"
+            th:href="@{/board/list(page=${boards.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="text-end">
+      <a type="button" class="btn btn-primary" th:href="@{/board/form}">쓰기</a>
+    </div>
+  </div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+  <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     -->
-  </body>
+</body>
+
 </html>
