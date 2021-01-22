@@ -33,7 +33,7 @@
         <tr th:each="board : ${boards}">
           <th th:text="${board.id}">Mark</th>
           <th><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}">Mark</a></th>
-          <th>홍길동</th>
+          <th th:text="${board.user.username}">홍길동</th>
         </tr>
         <tr>
       </tbody>
